@@ -14,6 +14,8 @@ Looks something [like this](https://cl.ly/1J2z161G3S1k).
 pr_status_notifier jazzdan pr_status_notifier 1
 ```
 
+Note that you will need to have a [GitHub access token](https://github.com/settings/tokens) defined in the `GITHUB_ACCESS_TOKEN` environment variable to access private repositories that you have access to.
+
 ## Installation
 
 ### From release

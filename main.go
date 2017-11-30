@@ -24,7 +24,7 @@ func main() {
 	accessToken, exists := os.LookupEnv("GITHUB_ACCESS_TOKEN")
 
 	if exists != true {
-		fmt.Println("Warning: no GitHub access token detected, will only be able to check public repos")
+		fmt.Println("Warning: no GITHUB_ACCESS_TOKEN environment variable detected, will only be able to check public repos")
 	}
 
 	owner := os.Args[1]
