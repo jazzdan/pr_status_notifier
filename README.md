@@ -20,8 +20,8 @@ Note that you will need to have a [GitHub access token](https://github.com/setti
 
 ### From release
 ```shell
-wget something
-untar
+wget https://github.com/jazzdan/pr_status_notifier/releases/download/v1.0/pr_status_notifier_mac_os.tar.gz
+tar -zxf pr_status_notifier_mac_os.tar.gz
 ```
 
 Then add to path
@@ -32,6 +32,6 @@ Prerequisites:
 
 ```shell
 git clone https://www.github.com/jazzdan/pr_status_notifier
-cd pr status_notifier
-go buold
+cd pr_status_notifier
+go build
 ```
