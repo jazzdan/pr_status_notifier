@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"strconv"
 	"time"
@@ -31,7 +32,7 @@ func main() {
 	prNumber, err := strconv.Atoi(os.Args[3])
 
 	notify = notificator.New(notificator.Options{
-		DefaultIcon: "icon/default.png",
+		DefaultIcon: "",
 		AppName:     "Can I push?",
 	})
 
@@ -45,21 +46,30 @@ func main() {
 		panic(err)
 	}
 
-	tick := time.Tick(5 * time.Second)
+	tick := time.Tick(3 * time.Second)
 
 	for {
 		select {
 		case <-tick:
-			pr, _, err := client.PullRequests.Get(ctx, owner, repo, prNumber)
+			pr, response, err := client.PullRequests.Get(ctx, owner, repo, prNumber)
 
 			if err != nil {
 				fmt.Println(fmt.Errorf("%v", err))
 				panic(err)
 			}
 
+			if response.StatusCode != http.StatusOK {
+				panic(response.Status)
+			}
+
+			if *pr.State == "closed" {
+				fmt.Println("Already merged")
+				return
+			}
+
 			if *pr.Mergeable == true {
 				message := fmt.Sprintf("Your PR %s/%s#%d is ready to be merged!", owner, repo, prNumber)
-				notify.Push("You can push!", message, "icon/default.png", notificator.UR_NORMAL)
+				notify.Push("You can push!", message, "", notificator.UR_NORMAL)
 				return
 			}
 		}
