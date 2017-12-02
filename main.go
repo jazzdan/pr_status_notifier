@@ -67,7 +67,16 @@ func main() {
 				return
 			}
 
-			if *pr.Mergeable == true {
+			ref := pr.GetHead().GetRef()
+
+			statuses, _, err := client.Repositories.GetCombinedStatus(ctx, owner, repo, ref, nil)
+
+			if err != nil {
+				fmt.Println(fmt.Errorf("%v", err))
+				panic(err)
+			}
+
+			if *pr.Mergeable == true && *statuses.State == "success" {
 				message := fmt.Sprintf("Your PR %s/%s#%d is ready to be merged!", owner, repo, prNumber)
 				notify.Push("You can push!", message, "", notificator.UR_NORMAL)
 				return
