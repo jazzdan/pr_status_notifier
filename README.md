@@ -33,5 +33,6 @@ Prerequisites:
 ```shell
 git clone https://www.github.com/jazzdan/pr_status_notifier
 cd pr_status_notifier
+go get github.com/0xAX/notificator github.com/google/go-github/github golang.org/x/oauth2
 go build
 ```
